@@ -12,7 +12,7 @@
 
 <meta name="author" content="Kentaro Matsuura" />
 
-<meta name="date" content="2024-10-02" />
+<meta name="date" content="2024-11-03" />
 
 <title>Optimal Adaptive Allocation Using Deep Reinforcement Learning</title>
 
@@ -62,7 +62,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
 { counter-reset: source-line 0; }
@@ -341,7 +341,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <h1 class="title toc-ignore">Optimal Adaptive Allocation Using Deep
 Reinforcement Learning</h1>
 <h4 class="author">Kentaro Matsuura</h4>
-<h4 class="date">2024-10-02</h4>
+<h4 class="date">2024-11-03</h4>
 
 
 
@@ -399,7 +399,17 @@ which we plan to execute at the end of the clinical trial.</p>
 <span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>  <span class="at">alpha =</span> <span class="fl">0.025</span></span>
 <span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>)</span>
 <span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a></span>
-<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>allocation_rule</span></code></pre></div>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>allocation_rule</span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="co">#&gt; &lt;AllocationRule&gt;</span></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="co">#&gt; dir: allocation_rules/20241012_065853</span></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="co">#&gt; created at: 2024-10-12 10:18:51</span></span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="co">#&gt; call:</span></span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a><span class="co">#&gt; learn_allocation_rule(models = models, N_total = 150, N_ini = rep(10, </span></span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a><span class="co">#&gt;     5), N_block = 10, Delta = 1.3, outcome_type = &quot;continuous&quot;, </span></span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a><span class="co">#&gt;     sd_normal = sqrt(4.5), seed = 123, rl_config = rl_config_set(iter = 1000), </span></span>
+<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a><span class="co">#&gt;     alpha = 0.025)</span></span>
+<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a><span class="co">#&gt; iterations: 1000</span></span>
+<span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a><span class="co">#&gt; checkpoints: 500, 600, 700, 800, 900, 1000</span></span></code></pre></div>
 <p>With the default settings, it takes roughly 10-50 seconds per iter,
 so it would take about 3-14 hours when <code>iter = 1000</code>.</p>
 </div>
@@ -410,7 +420,15 @@ dose and response data to <code>opt_allocation_probs()</code>.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>some_doses <span class="ot">&lt;-</span> <span class="fu">c</span>( <span class="dv">0</span>,  <span class="dv">0</span>,  <span class="dv">0</span>,  <span class="dv">0</span>,  <span class="dv">2</span>,  <span class="dv">2</span>,  <span class="dv">4</span>,  <span class="dv">4</span>,  <span class="dv">4</span>,  <span class="dv">6</span>,  <span class="dv">6</span>,   <span class="dv">8</span>,  <span class="dv">8</span>,   <span class="dv">8</span>)</span>
 <span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>some_resps <span class="ot">&lt;-</span> <span class="fu">c</span>(.<span class="dv">2</span>, .<span class="dv">1</span>, .<span class="dv">0</span>, .<span class="dv">3</span>, .<span class="dv">2</span>, .<span class="dv">4</span>, .<span class="dv">1</span>, .<span class="dv">6</span>, .<span class="dv">8</span>, .<span class="dv">5</span>, .<span class="dv">8</span>, <span class="fl">1.1</span>, .<span class="dv">9</span>, <span class="fl">1.6</span>)</span>
 <span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>allocation_rule<span class="sc">$</span><span class="fu">opt_allocation_probs</span>(some_doses, some_resps)</span></code></pre></div>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>allocation_rule<span class="sc">$</span><span class="fu">opt_allocation_probs</span>(some_doses, some_resps)</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co">#&gt;            0            2            4            6            8 </span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co">#&gt; 3.506682e-01 5.533118e-08 6.740401e-02 2.543487e-05 5.819023e-01</span></span></code></pre></div>
+<p>When 10 subjects in the next block are allocated to each dose
+according to these probabilities, we recommend using
+<code>DoseFinding::rndDesign()</code>.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>probs <span class="ot">&lt;-</span> allocation_rule<span class="sc">$</span><span class="fu">opt_allocation_probs</span>(some_doses, some_resps)</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>DoseFinding<span class="sc">::</span><span class="fu">rndDesign</span>(probs, <span class="dv">10</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="co">#&gt; [1] 4 0 1 0 5</span></span></code></pre></div>
 </div>
 <div id="simulation-based-adjustment-of-the-significance-level" class="section level2">
 <h2>Simulation-based adjustment of the significance level</h2>
@@ -418,14 +436,15 @@ dose and response data to <code>opt_allocation_probs()</code>.</p>
 in the original paper). Therefore, the significance level should be
 adjusted by simulation using <code>adjust_significance_level</code>
 function.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>adjusted_alpha <span class="ot">&lt;-</span> <span class="fu">adjust_significance_level</span>(</span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  allocation_rule, models,</span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>  <span class="at">N_total =</span> <span class="dv">150</span>, <span class="at">N_ini =</span> <span class="fu">rep</span>(<span class="dv">10</span>, <span class="dv">5</span>), <span class="at">N_block =</span> <span class="dv">10</span>,</span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>  <span class="at">outcome_type =</span> <span class="st">&quot;continuous&quot;</span>, <span class="at">sd_normal =</span> <span class="fu">sqrt</span>(<span class="fl">4.5</span>),</span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>  <span class="at">alpha =</span> <span class="fl">0.025</span>, <span class="at">n_sim =</span> <span class="dv">10000</span>, <span class="at">seed =</span> <span class="dv">123</span></span>
-<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>)</span>
-<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a></span>
-<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>adjusted_alpha</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>adjusted_alpha <span class="ot">&lt;-</span> <span class="fu">adjust_significance_level</span>(</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  allocation_rule, models,</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>  <span class="at">N_total =</span> <span class="dv">150</span>, <span class="at">N_ini =</span> <span class="fu">rep</span>(<span class="dv">10</span>, <span class="dv">5</span>), <span class="at">N_block =</span> <span class="dv">10</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>  <span class="at">outcome_type =</span> <span class="st">&quot;continuous&quot;</span>, <span class="at">sd_normal =</span> <span class="fu">sqrt</span>(<span class="fl">4.5</span>),</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>  <span class="at">alpha =</span> <span class="fl">0.025</span>, <span class="at">n_sim =</span> <span class="dv">10000</span>, <span class="at">seed =</span> <span class="dv">123</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>)</span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>adjusted_alpha</span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="co">#&gt; [1] 0.0221804</span></span></code></pre></div>
 </div>
 <div id="how-to-evaluate-the-allocation-rule" class="section level2">
 <h2>How to evaluate the allocation rule</h2>
@@ -433,32 +452,44 @@ function.</p>
 provided to evaluate the obtained allocation rule. The following is an
 example of code to perform a simulation study similar to Section 3 in
 the original paper.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>eval_models <span class="ot">&lt;-</span> DoseFinding<span class="sc">::</span><span class="fu">Mods</span>(</span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  <span class="at">doses =</span> doses, <span class="at">maxEff =</span> <span class="fl">1.65</span>,</span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>  <span class="at">linear =</span> <span class="cn">NULL</span>, <span class="at">emax =</span> <span class="fl">0.79</span>, <span class="at">sigEmax =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">5</span>), <span class="at">exponential =</span> <span class="dv">1</span>, <span class="at">quadratic =</span> <span class="sc">-</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">12</span></span>
-<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>)</span>
-<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>true_response_matrix <span class="ot">&lt;-</span> DoseFinding<span class="sc">::</span><span class="fu">getResp</span>(eval_models, <span class="at">doses =</span> doses)</span>
-<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>true_response_list <span class="ot">&lt;-</span> <span class="fu">as.list</span>(<span class="fu">data.frame</span>(true_response_matrix, <span class="at">check.names =</span> <span class="cn">FALSE</span>))</span>
-<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a></span>
-<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>n_sim <span class="ot">&lt;-</span> <span class="dv">1000</span>  <span class="co"># the number of simulated clinical trials</span></span>
-<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>d_res <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a></span>
-<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="cf">for</span> (true_model_name <span class="cf">in</span> <span class="fu">names</span>(true_response_list)) {</span>
-<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a>  true_response <span class="ot">&lt;-</span> true_response_list[[true_model_name]]</span>
-<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a>  <span class="cf">for</span> (simID <span class="cf">in</span> <span class="fu">seq_len</span>(n_sim)) {</span>
-<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a>    res_one <span class="ot">&lt;-</span> <span class="fu">simulate_one_trial</span>(</span>
-<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a>      allocation_rule, models, </span>
-<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a>      <span class="at">true_response =</span> true_response,</span>
-<span id="cb8-17"><a href="#cb8-17" tabindex="-1"></a>      <span class="at">N_total =</span> <span class="dv">150</span>, <span class="at">N_ini =</span> <span class="fu">rep</span>(<span class="dv">10</span>, <span class="dv">5</span>), <span class="at">N_block =</span> <span class="dv">10</span>, </span>
-<span id="cb8-18"><a href="#cb8-18" tabindex="-1"></a>      <span class="at">Delta =</span> <span class="fl">1.3</span>, <span class="at">outcome_type =</span> <span class="st">&quot;continuous&quot;</span>, <span class="at">sd_normal =</span> <span class="fu">sqrt</span>(<span class="fl">4.5</span>),</span>
-<span id="cb8-19"><a href="#cb8-19" tabindex="-1"></a>      <span class="at">alpha =</span> adjusted_alpha, <span class="at">seed =</span> simID, <span class="at">eval_type =</span> <span class="st">&quot;all&quot;</span></span>
-<span id="cb8-20"><a href="#cb8-20" tabindex="-1"></a>    )</span>
-<span id="cb8-21"><a href="#cb8-21" tabindex="-1"></a>    d_res_one <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">simID =</span> simID, <span class="at">true_model_name =</span> true_model_name, res_one)</span>
-<span id="cb8-22"><a href="#cb8-22" tabindex="-1"></a>    d_res <span class="ot">&lt;-</span> <span class="fu">rbind</span>(d_res, d_res_one)</span>
-<span id="cb8-23"><a href="#cb8-23" tabindex="-1"></a>  }</span>
-<span id="cb8-24"><a href="#cb8-24" tabindex="-1"></a>}</span>
-<span id="cb8-25"><a href="#cb8-25" tabindex="-1"></a></span>
-<span id="cb8-26"><a href="#cb8-26" tabindex="-1"></a><span class="fu">head</span>(d_res)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>eval_models <span class="ot">&lt;-</span> DoseFinding<span class="sc">::</span><span class="fu">Mods</span>(</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  <span class="at">doses =</span> doses, <span class="at">maxEff =</span> <span class="fl">1.65</span>,</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>  <span class="at">linear =</span> <span class="cn">NULL</span>, <span class="at">emax =</span> <span class="fl">0.79</span>, <span class="at">sigEmax =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">5</span>), <span class="at">exponential =</span> <span class="dv">1</span>, <span class="at">quadratic =</span> <span class="sc">-</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">12</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>)</span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>true_response_matrix <span class="ot">&lt;-</span> DoseFinding<span class="sc">::</span><span class="fu">getResp</span>(eval_models, <span class="at">doses =</span> doses)</span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>true_response_list <span class="ot">&lt;-</span> <span class="fu">as.list</span>(<span class="fu">data.frame</span>(true_response_matrix, <span class="at">check.names =</span> <span class="cn">FALSE</span>))</span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a>n_sim <span class="ot">&lt;-</span> <span class="dv">1000</span>  <span class="co"># the number of simulated clinical trials</span></span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a>sim_list <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a><span class="cf">for</span> (true_model_name <span class="cf">in</span> <span class="fu">names</span>(true_response_list)) {</span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a>  true_response <span class="ot">&lt;-</span> true_response_list[[true_model_name]]</span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a>  <span class="cf">for</span> (simID <span class="cf">in</span> <span class="fu">seq_len</span>(n_sim)) {</span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a>    sim_one <span class="ot">&lt;-</span> <span class="fu">simulate_one_trial</span>(</span>
+<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a>      allocation_rule, models, </span>
+<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a>      <span class="at">true_response =</span> true_response,</span>
+<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a>      <span class="at">N_total =</span> <span class="dv">150</span>, <span class="at">N_ini =</span> <span class="fu">rep</span>(<span class="dv">10</span>, <span class="dv">5</span>), <span class="at">N_block =</span> <span class="dv">10</span>, </span>
+<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a>      <span class="at">Delta =</span> <span class="fl">1.3</span>, <span class="at">outcome_type =</span> <span class="st">&quot;continuous&quot;</span>, <span class="at">sd_normal =</span> <span class="fu">sqrt</span>(<span class="fl">4.5</span>),</span>
+<span id="cb9-19"><a href="#cb9-19" tabindex="-1"></a>      <span class="at">alpha =</span> adjusted_alpha, <span class="at">seed =</span> simID, <span class="at">eval_type =</span> <span class="st">&quot;all&quot;</span></span>
+<span id="cb9-20"><a href="#cb9-20" tabindex="-1"></a>    )</span>
+<span id="cb9-21"><a href="#cb9-21" tabindex="-1"></a>    sim_list[[<span class="fu">length</span>(sim_list) <span class="sc">+</span> <span class="dv">1</span>]] <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb9-22"><a href="#cb9-22" tabindex="-1"></a>      <span class="at">simID =</span> simID, <span class="at">true_model_name =</span> true_model_name, sim_one, <span class="at">check.names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb9-23"><a href="#cb9-23" tabindex="-1"></a>  }</span>
+<span id="cb9-24"><a href="#cb9-24" tabindex="-1"></a>}</span>
+<span id="cb9-25"><a href="#cb9-25" tabindex="-1"></a></span>
+<span id="cb9-26"><a href="#cb9-26" tabindex="-1"></a>d_sim <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, sim_list)</span>
+<span id="cb9-27"><a href="#cb9-27" tabindex="-1"></a><span class="fu">head</span>(d_sim, <span class="dv">10</span>)</span>
+<span id="cb9-28"><a href="#cb9-28" tabindex="-1"></a><span class="co">#&gt;    simID true_model_name  min_p_value selected_model_name estimated_target_dose         MAE    n_of_0    n_of_2     n_of_4     n_of_6    n_of_8</span></span>
+<span id="cb9-29"><a href="#cb9-29" tabindex="-1"></a><span class="co">#&gt; 1      1          linear 3.637147e-04              linear              6.219219 0.013897321 0.3066667 0.3866667 0.06666667 0.10000000 0.1400000</span></span>
+<span id="cb9-30"><a href="#cb9-30" tabindex="-1"></a><span class="co">#&gt; 2      2          linear 1.788856e-03              linear              6.523529 0.034856764 0.3933333 0.2400000 0.06666667 0.16666667 0.1333333</span></span>
+<span id="cb9-31"><a href="#cb9-31" tabindex="-1"></a><span class="co">#&gt; 3      3          linear 2.992331e-07              linear              5.812620 0.087006441 0.3533333 0.1133333 0.06666667 0.06666667 0.4000000</span></span>
+<span id="cb9-32"><a href="#cb9-32" tabindex="-1"></a><span class="co">#&gt; 4      4          linear 3.650607e-03              linear              8.392319 0.256732278 0.3600000 0.1733333 0.20666667 0.12666667 0.1333333</span></span>
+<span id="cb9-33"><a href="#cb9-33" tabindex="-1"></a><span class="co">#&gt; 5      5          linear 2.845267e-04              linear              6.240667 0.010305335 0.3600000 0.2666667 0.16000000 0.06666667 0.1466667</span></span>
+<span id="cb9-34"><a href="#cb9-34" tabindex="-1"></a><span class="co">#&gt; 6      6          linear 3.881463e-03              linear              8.081026 0.226896732 0.3400000 0.3000000 0.06666667 0.12666667 0.1666667</span></span>
+<span id="cb9-35"><a href="#cb9-35" tabindex="-1"></a><span class="co">#&gt; 7      7          linear 4.219836e-06              linear              5.251137 0.206577181 0.3866667 0.2533333 0.06666667 0.09333333 0.2000000</span></span>
+<span id="cb9-36"><a href="#cb9-36" tabindex="-1"></a><span class="co">#&gt; 8      8          linear 4.519901e-02                &lt;NA&gt;                    NA          NA 0.2933333 0.4600000 0.06666667 0.07333333 0.1066667</span></span>
+<span id="cb9-37"><a href="#cb9-37" tabindex="-1"></a><span class="co">#&gt; 9      9          linear 3.358248e-03              linear              6.262230 0.006718837 0.2466667 0.4866667 0.10000000 0.06666667 0.1000000</span></span>
+<span id="cb9-38"><a href="#cb9-38" tabindex="-1"></a><span class="co">#&gt; 10    10          linear 1.302790e-08              linear              4.689112 0.354939835 0.2666667 0.1466667 0.06666667 0.13333333 0.3866667</span></span></code></pre></div>
 </div>
 </div>
 <div id="tips" class="section level1">
@@ -471,18 +502,18 @@ method. Here, we add the exponential model according to the supporting
 information in the original paper, and specify the argument
 <code>rl_models</code> in <code>learn_allocation_rule</code>
 function.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>rl_models <span class="ot">&lt;-</span> DoseFinding<span class="sc">::</span><span class="fu">Mods</span>(</span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  <span class="at">doses =</span> doses, <span class="at">maxEff =</span> <span class="fl">1.65</span>,</span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>  <span class="at">linear =</span> <span class="cn">NULL</span>, <span class="at">emax =</span> <span class="fl">0.79</span>, <span class="at">sigEmax =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">5</span>), <span class="at">exponential =</span> <span class="dv">1</span></span>
-<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>)</span>
-<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a></span>
-<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>allocation_rule <span class="ot">&lt;-</span> <span class="fu">learn_allocation_rule</span>(</span>
-<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>  models,</span>
-<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a>  <span class="at">N_total =</span> <span class="dv">150</span>, <span class="at">N_ini =</span> <span class="fu">rep</span>(<span class="dv">10</span>, <span class="dv">5</span>), <span class="at">N_block =</span> <span class="dv">10</span>, <span class="at">Delta =</span> <span class="fl">1.3</span>,</span>
-<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a>  <span class="at">outcome_type =</span> <span class="st">&quot;continuous&quot;</span>, <span class="at">sd_normal =</span> <span class="fu">sqrt</span>(<span class="fl">4.5</span>), </span>
-<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">123</span>, <span class="at">rl_models =</span> rl_models, <span class="at">rl_config =</span> <span class="fu">rl_config_set</span>(<span class="at">iter =</span> <span class="dv">1000</span>),</span>
-<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a>  <span class="at">alpha =</span> <span class="fl">0.025</span></span>
-<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>rl_models <span class="ot">&lt;-</span> DoseFinding<span class="sc">::</span><span class="fu">Mods</span>(</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="at">doses =</span> doses, <span class="at">maxEff =</span> <span class="fl">1.65</span>,</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>  <span class="at">linear =</span> <span class="cn">NULL</span>, <span class="at">emax =</span> <span class="fl">0.79</span>, <span class="at">sigEmax =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">5</span>), <span class="at">exponential =</span> <span class="dv">1</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>)</span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>allocation_rule <span class="ot">&lt;-</span> <span class="fu">learn_allocation_rule</span>(</span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>  models,</span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a>  <span class="at">N_total =</span> <span class="dv">150</span>, <span class="at">N_ini =</span> <span class="fu">rep</span>(<span class="dv">10</span>, <span class="dv">5</span>), <span class="at">N_block =</span> <span class="dv">10</span>, <span class="at">Delta =</span> <span class="fl">1.3</span>,</span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a>  <span class="at">outcome_type =</span> <span class="st">&quot;continuous&quot;</span>, <span class="at">sd_normal =</span> <span class="fu">sqrt</span>(<span class="fl">4.5</span>), </span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">123</span>, <span class="at">rl_models =</span> rl_models, <span class="at">rl_config =</span> <span class="fu">rl_config_set</span>(<span class="at">iter =</span> <span class="dv">1000</span>),</span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a>  <span class="at">alpha =</span> <span class="fl">0.025</span></span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a>)</span></code></pre></div>
 </div>
 <div id="binary-outcome" class="section level2">
 <h2>Binary outcome</h2>
@@ -492,22 +523,22 @@ method on the logit scale (see <a href="https://cran.r-project.org/package=DoseF
 vignette</a> of <code>DoseFinding</code> package), and specify the
 argument <code>outcome_type = &quot;binary&quot;</code> in
 <code>learn_allocation_rule</code> function.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>doses <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.5</span>, <span class="fl">1.5</span>, <span class="fl">2.5</span>, <span class="dv">4</span>)</span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>models <span class="ot">&lt;-</span> DoseFinding<span class="sc">::</span><span class="fu">Mods</span>(</span>
-<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>  <span class="at">doses =</span> doses, </span>
-<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>  <span class="at">placEff =</span> <span class="fu">qlogis</span>(<span class="fl">0.1</span>), </span>
-<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>  <span class="at">maxEff =</span> <span class="fu">qlogis</span>(<span class="fl">0.35</span>) <span class="sc">-</span> <span class="fu">qlogis</span>(<span class="fl">0.1</span>),</span>
-<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>  <span class="at">emax =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="dv">1</span>), <span class="at">sigEmax =</span> <span class="fu">rbind</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>), <span class="fu">c</span>(<span class="fl">2.5</span>, <span class="dv">4</span>)), <span class="at">betaMod =</span> <span class="fu">c</span>(<span class="fl">1.1</span>, <span class="fl">1.1</span>)</span>
-<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a>)</span>
-<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a></span>
-<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a>allocation_rule <span class="ot">&lt;-</span> <span class="fu">learn_allocation_rule</span>(</span>
-<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a>  models,</span>
-<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a>  <span class="at">N_total =</span> <span class="dv">200</span>, <span class="at">N_ini =</span> <span class="fu">rep</span>(<span class="dv">10</span>, <span class="dv">5</span>), <span class="at">N_block =</span> <span class="dv">10</span>,</span>
-<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a>  <span class="at">Delta =</span> <span class="fl">1.4</span>, <span class="at">outcome_type =</span> <span class="st">&quot;binary&quot;</span>,</span>
-<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">123</span>, <span class="at">rl_config =</span> <span class="fu">rl_config_set</span>(<span class="at">iter =</span> <span class="dv">1000</span>),</span>
-<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a>  <span class="at">alpha =</span> <span class="fl">0.05</span></span>
-<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>doses <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.5</span>, <span class="fl">1.5</span>, <span class="fl">2.5</span>, <span class="dv">4</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>models <span class="ot">&lt;-</span> DoseFinding<span class="sc">::</span><span class="fu">Mods</span>(</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>  <span class="at">doses =</span> doses, </span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>  <span class="at">placEff =</span> <span class="fu">qlogis</span>(<span class="fl">0.1</span>), </span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>  <span class="at">maxEff =</span> <span class="fu">qlogis</span>(<span class="fl">0.35</span>) <span class="sc">-</span> <span class="fu">qlogis</span>(<span class="fl">0.1</span>),</span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>  <span class="at">emax =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="dv">1</span>), <span class="at">sigEmax =</span> <span class="fu">rbind</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>), <span class="fu">c</span>(<span class="fl">2.5</span>, <span class="dv">4</span>)), <span class="at">betaMod =</span> <span class="fu">c</span>(<span class="fl">1.1</span>, <span class="fl">1.1</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>)</span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a>allocation_rule <span class="ot">&lt;-</span> <span class="fu">learn_allocation_rule</span>(</span>
+<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a>  models,</span>
+<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a>  <span class="at">N_total =</span> <span class="dv">200</span>, <span class="at">N_ini =</span> <span class="fu">rep</span>(<span class="dv">10</span>, <span class="dv">5</span>), <span class="at">N_block =</span> <span class="dv">10</span>,</span>
+<span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a>  <span class="at">Delta =</span> <span class="fl">1.4</span>, <span class="at">outcome_type =</span> <span class="st">&quot;binary&quot;</span>,</span>
+<span id="cb11-14"><a href="#cb11-14" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">123</span>, <span class="at">rl_config =</span> <span class="fu">rl_config_set</span>(<span class="at">iter =</span> <span class="dv">1000</span>),</span>
+<span id="cb11-15"><a href="#cb11-15" tabindex="-1"></a>  <span class="at">alpha =</span> <span class="fl">0.05</span></span>
+<span id="cb11-16"><a href="#cb11-16" tabindex="-1"></a>)</span></code></pre></div>
 </div>
 <div id="how-to-use-allocation-rule-class" class="section level2">
 <h2>How to use Allocation Rule Class</h2>
@@ -517,27 +548,27 @@ Rule Class (R6). Here is a brief explanation of how to use it.</p>
 <h3>Save the allocation rule</h3>
 <p>The obtained allocation rule can be saved using <code>saveRDS</code>,
 a standard R function.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">saveRDS</span>(allocation_rule, <span class="at">file =</span> <span class="st">&quot;allocation_rule.RDS&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="fu">saveRDS</span>(allocation_rule, <span class="at">file =</span> <span class="st">&quot;allocation_rule.RDS&quot;</span>)</span></code></pre></div>
 <p>To load it, use <code>readRDS</code>.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>allocation_rule <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file =</span> <span class="st">&quot;allocation_rule.RDS&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>allocation_rule <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="at">file =</span> <span class="st">&quot;allocation_rule.RDS&quot;</span>)</span></code></pre></div>
 </div>
 <div id="inputs-of-learn_allocation_rule-function" class="section level3">
 <h3>Inputs of <code>learn_allocation_rule</code> function</h3>
 <p>The inputs passed to the <code>learn_allocation_rule</code> function
 can be retrieved as follows.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>allocation_rule<span class="sc">$</span>input</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>allocation_rule<span class="sc">$</span>input</span></code></pre></div>
 </div>
 <div id="obtain-returns-during-reinforcement-learning" class="section level3">
 <h3>Obtain returns during reinforcement learning</h3>
 <p>The statistics of returns during reinforcement learning can be
 retrieved as follows.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>allocation_rule<span class="sc">$</span>log</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>allocation_rule<span class="sc">$</span>log</span></code></pre></div>
 </div>
 <div id="resume-learning" class="section level3">
 <h3>Resume learning</h3>
 <p>Reinforcement learning can be resumed with the following
 function.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>allocation_rule<span class="sc">$</span><span class="fu">resume_learning</span>(<span class="at">iter =</span> <span class="dv">100</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>allocation_rule<span class="sc">$</span><span class="fu">resume_learning</span>(<span class="at">iter =</span> <span class="dv">100</span>)</span></code></pre></div>
 </div>
 <div id="use-checkpoint" class="section level3">
 <h3>Use checkpoint</h3>
@@ -547,7 +578,7 @@ checkpoint is used to build an allocation rule. If you want to build
 another allocation rule using another checkpoint, specify the directory
 name created by <code>learn_allocation_rule</code> function as
 follows.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a>another_allocation_rule <span class="ot">&lt;-</span> AllocationRule<span class="sc">$</span><span class="fu">new</span>(<span class="at">dir =</span> <span class="st">&quot;checkpoints/20240812_051246_00900&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>another_allocation_rule <span class="ot">&lt;-</span> AllocationRule<span class="sc">$</span><span class="fu">new</span>(<span class="at">dir =</span> <span class="st">&quot;checkpoints/20241012_065853_00900&quot;</span>)</span></code></pre></div>
 </div>
 </div>
 </div>
