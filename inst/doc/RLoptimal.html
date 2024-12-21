@@ -12,7 +12,7 @@
 
 <meta name="author" content="Kentaro Matsuura" />
 
-<meta name="date" content="2024-11-22" />
+<meta name="date" content="2024-12-21" />
 
 <title>Optimal Adaptive Allocation Using Deep Reinforcement Learning</title>
 
@@ -341,7 +341,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <h1 class="title toc-ignore">Optimal Adaptive Allocation Using Deep
 Reinforcement Learning</h1>
 <h4 class="author">Kentaro Matsuura</h4>
-<h4 class="date">2024-11-22</h4>
+<h4 class="date">2024-12-21</h4>
 
 
 
@@ -401,8 +401,8 @@ which we plan to execute at the end of the clinical trial.</p>
 <span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a></span>
 <span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>allocation_rule</span>
 <span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="co">#&gt; &lt;AllocationRule&gt;</span></span>
-<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="co">#&gt; dir: allocation_rules/20241012_065853</span></span>
-<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="co">#&gt; created at: 2024-10-12 10:18:51</span></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="co">#&gt; dir: allocation_rules/20241201_114609</span></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="co">#&gt; created at: 2024-12-01 14:48:40</span></span>
 <span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="co">#&gt; call:</span></span>
 <span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a><span class="co">#&gt; learn_allocation_rule(models = models, N_total = 150, N_ini = rep(10, </span></span>
 <span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a><span class="co">#&gt;     5), N_block = 10, Delta = 1.3, outcome_type = &quot;continuous&quot;, </span></span>
@@ -422,13 +422,13 @@ dose and response data to <code>opt_allocation_probs()</code>.</p>
 <span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a></span>
 <span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>allocation_rule<span class="sc">$</span><span class="fu">opt_allocation_probs</span>(some_doses, some_resps)</span>
 <span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co">#&gt;            0            2            4            6            8 </span></span>
-<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co">#&gt; 3.506682e-01 5.533118e-08 6.740401e-02 2.543487e-05 5.819023e-01</span></span></code></pre></div>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co">#&gt; 6.023860e-02 5.389110e-06 3.485905e-04 1.684970e-05 9.393906e-01</span></span></code></pre></div>
 <p>When 10 subjects in the next block are allocated to each dose
 according to these probabilities, we recommend using
 <code>DoseFinding::rndDesign()</code>.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>probs <span class="ot">&lt;-</span> allocation_rule<span class="sc">$</span><span class="fu">opt_allocation_probs</span>(some_doses, some_resps)</span>
 <span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>DoseFinding<span class="sc">::</span><span class="fu">rndDesign</span>(probs, <span class="dv">10</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="co">#&gt; [1] 4 0 1 0 5</span></span></code></pre></div>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="co">#&gt; [1] 1 0 1 0 8</span></span></code></pre></div>
 </div>
 <div id="simulation-based-adjustment-of-the-significance-level" class="section level2">
 <h2>Simulation-based adjustment of the significance level</h2>
@@ -444,7 +444,7 @@ function.</p>
 <span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>)</span>
 <span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a></span>
 <span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>adjusted_alpha</span>
-<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="co">#&gt; [1] 0.0221804</span></span></code></pre></div>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="co">#&gt; [1] 0.02021423</span></span></code></pre></div>
 </div>
 <div id="how-to-evaluate-the-allocation-rule" class="section level2">
 <h2>How to evaluate the allocation rule</h2>
@@ -479,17 +479,17 @@ the original paper.</p>
 <span id="cb9-25"><a href="#cb9-25" tabindex="-1"></a></span>
 <span id="cb9-26"><a href="#cb9-26" tabindex="-1"></a>d_sim <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, sim_list)</span>
 <span id="cb9-27"><a href="#cb9-27" tabindex="-1"></a><span class="fu">head</span>(d_sim, <span class="dv">10</span>)</span>
-<span id="cb9-28"><a href="#cb9-28" tabindex="-1"></a><span class="co">#&gt;    simID true_model_name  min_p_value selected_model_name estimated_target_dose         MAE    n_of_0    n_of_2     n_of_4     n_of_6    n_of_8</span></span>
-<span id="cb9-29"><a href="#cb9-29" tabindex="-1"></a><span class="co">#&gt; 1      1          linear 3.637147e-04              linear              6.219219 0.013897321 0.3066667 0.3866667 0.06666667 0.10000000 0.1400000</span></span>
-<span id="cb9-30"><a href="#cb9-30" tabindex="-1"></a><span class="co">#&gt; 2      2          linear 1.788856e-03              linear              6.523529 0.034856764 0.3933333 0.2400000 0.06666667 0.16666667 0.1333333</span></span>
-<span id="cb9-31"><a href="#cb9-31" tabindex="-1"></a><span class="co">#&gt; 3      3          linear 2.992331e-07              linear              5.812620 0.087006441 0.3533333 0.1133333 0.06666667 0.06666667 0.4000000</span></span>
-<span id="cb9-32"><a href="#cb9-32" tabindex="-1"></a><span class="co">#&gt; 4      4          linear 3.650607e-03              linear              8.392319 0.256732278 0.3600000 0.1733333 0.20666667 0.12666667 0.1333333</span></span>
-<span id="cb9-33"><a href="#cb9-33" tabindex="-1"></a><span class="co">#&gt; 5      5          linear 2.845267e-04              linear              6.240667 0.010305335 0.3600000 0.2666667 0.16000000 0.06666667 0.1466667</span></span>
-<span id="cb9-34"><a href="#cb9-34" tabindex="-1"></a><span class="co">#&gt; 6      6          linear 3.881463e-03              linear              8.081026 0.226896732 0.3400000 0.3000000 0.06666667 0.12666667 0.1666667</span></span>
-<span id="cb9-35"><a href="#cb9-35" tabindex="-1"></a><span class="co">#&gt; 7      7          linear 4.219836e-06              linear              5.251137 0.206577181 0.3866667 0.2533333 0.06666667 0.09333333 0.2000000</span></span>
-<span id="cb9-36"><a href="#cb9-36" tabindex="-1"></a><span class="co">#&gt; 8      8          linear 4.519901e-02                &lt;NA&gt;                    NA          NA 0.2933333 0.4600000 0.06666667 0.07333333 0.1066667</span></span>
-<span id="cb9-37"><a href="#cb9-37" tabindex="-1"></a><span class="co">#&gt; 9      9          linear 3.358248e-03              linear              6.262230 0.006718837 0.2466667 0.4866667 0.10000000 0.06666667 0.1000000</span></span>
-<span id="cb9-38"><a href="#cb9-38" tabindex="-1"></a><span class="co">#&gt; 10    10          linear 1.302790e-08              linear              4.689112 0.354939835 0.2666667 0.1466667 0.06666667 0.13333333 0.3866667</span></span></code></pre></div>
+<span id="cb9-28"><a href="#cb9-28" tabindex="-1"></a><span class="co">#&gt;    simID true_model_name  min_p_value selected_model_name estimated_target_dose        MAE    n_of_0    n_of_2     n_of_4     n_of_6     n_of_8</span></span>
+<span id="cb9-29"><a href="#cb9-29" tabindex="-1"></a><span class="co">#&gt; 1      1          linear 2.664834e-03              linear             6.4373669 0.02152038 0.2800000 0.4866667 0.06666667 0.07333333 0.09333333</span></span>
+<span id="cb9-30"><a href="#cb9-30" tabindex="-1"></a><span class="co">#&gt; 2      2          linear 5.367406e-03              linear             7.5199780 0.16688577 0.4733333 0.1333333 0.06666667 0.18666667 0.14000000</span></span>
+<span id="cb9-31"><a href="#cb9-31" tabindex="-1"></a><span class="co">#&gt; 3      3          linear 1.146988e-04             sigEmax             5.3126300 0.31777648 0.2800000 0.4466667 0.06666667 0.07333333 0.13333333</span></span>
+<span id="cb9-32"><a href="#cb9-32" tabindex="-1"></a><span class="co">#&gt; 4      4          linear 2.559644e-02                &lt;NA&gt;                    NA         NA 0.4133333 0.0800000 0.08666667 0.24000000 0.18000000</span></span>
+<span id="cb9-33"><a href="#cb9-33" tabindex="-1"></a><span class="co">#&gt; 5      5          linear 5.367572e-03              linear             7.3541945 0.14740065 0.3733333 0.2600000 0.12000000 0.13333333 0.11333333</span></span>
+<span id="cb9-34"><a href="#cb9-34" tabindex="-1"></a><span class="co">#&gt; 6      6          linear 6.299454e-04                emax             3.4787829 0.38459844 0.3466667 0.4200000 0.06666667 0.06666667 0.10000000</span></span>
+<span id="cb9-35"><a href="#cb9-35" tabindex="-1"></a><span class="co">#&gt; 7      7          linear 3.397589e-05              linear             5.2822467 0.19928701 0.3200000 0.3733333 0.06666667 0.08666667 0.15333333</span></span>
+<span id="cb9-36"><a href="#cb9-36" tabindex="-1"></a><span class="co">#&gt; 8      8          linear 2.107865e-02                &lt;NA&gt;                    NA         NA 0.2866667 0.4733333 0.06666667 0.06666667 0.10666667</span></span>
+<span id="cb9-37"><a href="#cb9-37" tabindex="-1"></a><span class="co">#&gt; 9      9          linear 4.607294e-05              linear             5.6278953 0.12371108 0.3600000 0.2333333 0.14666667 0.06666667 0.19333333</span></span>
+<span id="cb9-38"><a href="#cb9-38" tabindex="-1"></a><span class="co">#&gt; 10    10          linear 4.710722e-04                emax             0.3685151 0.45576455 0.2533333 0.4933333 0.06666667 0.10666667 0.08000000</span></span></code></pre></div>
 </div>
 </div>
 <div id="tips" class="section level1">
@@ -578,7 +578,7 @@ checkpoint is used to build an allocation rule. If you want to build
 another allocation rule using another checkpoint, specify the directory
 name created by <code>learn_allocation_rule</code> function as
 follows.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>another_allocation_rule <span class="ot">&lt;-</span> AllocationRule<span class="sc">$</span><span class="fu">new</span>(<span class="at">dir =</span> <span class="st">&quot;checkpoints/20241012_065853_00900&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>another_allocation_rule <span class="ot">&lt;-</span> AllocationRule<span class="sc">$</span><span class="fu">new</span>(<span class="at">dir =</span> <span class="st">&quot;checkpoints/20241201_114609_00900&quot;</span>)</span></code></pre></div>
 </div>
 </div>
 </div>

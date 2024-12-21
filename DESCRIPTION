@@ -1,7 +1,7 @@
 Package: RLoptimal
 Type: Package
 Title: Optimal Adaptive Allocation Using Deep Reinforcement Learning
-Version: 1.1.1
+Version: 1.2.0
 Authors@R: c(
     person("Kentaro", "Matsuura", , "matsuurakentaro55@gmail.com", 
            role = c("aut", "cre", "cph"), comment = c(ORCID = "0000-0001-5262-055X")),
@@ -27,10 +27,10 @@ Collate: 'timer.R' 'train_algo.R' 'utils.R' 'allocation_rule.R'
         'simulate_one_trial.R' 'adjust_significance_level.R'
 Config/testthat/edition: 3
 NeedsCompilation: no
-Packaged: 2024-11-21 21:43:24 UTC; kmatsuu
+Packaged: 2024-12-21 02:17:58 UTC; kmatsuu
 Author: Kentaro Matsuura [aut, cre, cph]
     (<https://orcid.org/0000-0001-5262-055X>),
   Koji Makiyama [aut, ctb]
 Maintainer: Kentaro Matsuura <matsuurakentaro55@gmail.com>
 Repository: CRAN
-Date/Publication: 2024-11-21 22:10:02 UTC
+Date/Publication: 2024-12-21 03:10:02 UTC

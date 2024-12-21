@@ -1,11 +1,13 @@
 generate_setup_code <- function(
-    doses, models, Delta, outcome_type, optimization_metric, rl_models, alpha, selModel, Delta_range) {
+    doses, models, Delta, outcome_type, optimization_metric, rl_models, seed, alpha, selModel, Delta_range) {
 
   substitute({
     restore_R_object <- function(deparsed_object) {
       eval(parse(text = deparsed_object))
     }
 
+    set.seed(SEED)
+    
     doses <- DOSES
     models <- restore_R_object(MODELS)
     Delta <- DELTA
@@ -26,17 +28,16 @@ generate_setup_code <- function(
     true_responses <- unname(unlist(true_response_list))
 
     # Utility functions
+    lower_all <- DoseFinding::TD(rl_models, Delta = Delta_lower, direction = direction)
+    upper_all <- DoseFinding::TD(rl_models, Delta = Delta_upper, direction = direction)
+
     compute_reward_TD <- function(estimated_target_dose, true_model_name) {
       # estimated_target_dose is possibly NA
       if (is.na(estimated_target_dose)) return(0)
 
-      # Note: Calculating TD for all DR models is costly, but extracting
-      # a single model from 'rl_models' is troublesome.
-      # The overhead is about 100ms per execution.
-      lower <- DoseFinding::TD(rl_models, Delta = Delta_lower, direction = direction)
-      lower <- unname(lower[true_model_name])
-      upper <- DoseFinding::TD(rl_models, Delta = Delta_upper, direction = direction)
-      upper <- unname(upper[true_model_name])
+      lower <- lower_all[[true_model_name]]
+      upper <- upper_all[[true_model_name]]
+      
       # TD returns NA for large Delta, so if NA, return Inf.
       lower <- ifelse(is.na(lower), Inf, lower)
       upper <- ifelse(is.na(upper), Inf, upper)
@@ -63,8 +64,9 @@ generate_setup_code <- function(
     compute_reward <- function(true_model_name, sim_doses, sim_resps) {
       
       if (outcome_type == "binary") {
-        sim_Ns <- unname(tapply(sim_resps, sim_doses, length))
-        sim_resp_rates <- unname(tapply(sim_resps, sim_doses, sum)) / sim_Ns
+        resps_per_dose <- split(sim_resps, sim_doses)
+        sim_Ns <- vapply(resps_per_dose, length, integer(1L), USE.NAMES = FALSE)
+        sim_resp_rates <- vapply(resps_per_dose, sum, numeric(1L), USE.NAMES = FALSE) / sim_Ns
         # fit logistic regression (without intercept)
         logfit <- glm(sim_resp_rates ~ factor(doses) + 0, family = binomial, weights = sim_Ns)
         mu_hat <- coef(logfit)
@@ -133,6 +135,7 @@ generate_setup_code <- function(
   }, list(DOSES = doses, MODELS = deparse(models), DELTA = Delta, 
           OUTCOME_TYPE = outcome_type,
           OPTIMIZATION_METRIC = optimization_metric,
-          RL_MODELS = deparse(rl_models), ALPHA = alpha,
-          SEL_MODEL = selModel, DELTA_LOWER = Delta_range[1], DELTA_UPPER = Delta_range[2]))
+          RL_MODELS = deparse(rl_models), SEED = seed, 
+          ALPHA = alpha, SEL_MODEL = selModel,
+          DELTA_LOWER = Delta_range[1], DELTA_UPPER = Delta_range[2]))
 }
