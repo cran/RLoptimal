@@ -1,7 +1,7 @@
 Package: RLoptimal
 Type: Package
 Title: Optimal Adaptive Allocation Using Deep Reinforcement Learning
-Version: 1.2.1
+Version: 1.2.2
 Authors@R: c(
     person("Kentaro", "Matsuura", , "matsuurakentaro55@gmail.com", 
            role = c("aut", "cre", "cph"), comment = c(ORCID = "0000-0001-5262-055X")),
@@ -19,7 +19,7 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Language: en-US
 RoxygenNote: 7.3.2
-Imports: DoseFinding, glue, R6, reticulate, stats, utils
+Imports: DoseFinding, glue, R6, reticulate, stats, utils, zip
 Suggests: knitr, rmarkdown, testthat (>= 3.0.0)
 Collate: 'timer.R' 'train_algo.R' 'utils.R' 'allocation_rule.R'
         'generate_setup_code.R' 'rl_dnn_config.R' 'rl_config_set.R'
@@ -27,10 +27,10 @@ Collate: 'timer.R' 'train_algo.R' 'utils.R' 'allocation_rule.R'
         'simulate_one_trial.R' 'adjust_significance_level.R'
 Config/testthat/edition: 3
 NeedsCompilation: no
-Packaged: 2025-01-13 12:49:35 UTC; kmatsuu
-Author: Kentaro Matsuura [aut, cre, cph]
-    (<https://orcid.org/0000-0001-5262-055X>),
+Packaged: 2025-10-02 22:51:25 UTC; kmatsuu
+Author: Kentaro Matsuura [aut, cre, cph] (ORCID:
+    <https://orcid.org/0000-0001-5262-055X>),
   Koji Makiyama [aut, ctb]
 Maintainer: Kentaro Matsuura <matsuurakentaro55@gmail.com>
 Repository: CRAN
-Date/Publication: 2025-01-13 13:50:01 UTC
+Date/Publication: 2025-10-02 23:10:02 UTC

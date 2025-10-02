@@ -1,9 +1,9 @@
-fcb19e833cb163d17cc2f926944bef12 *DESCRIPTION
+b15361d7f56fb0eb67d06382bed56f96 *DESCRIPTION
 cdd1f055b68e53b5b6c8f870bc1c9099 *LICENSE
-6fb351c4732984b256527626debe7b46 *NAMESPACE
+a4421d3490e0dfd7dd616ee0974cef52 *NAMESPACE
 65d6a6a960a3fb7cc06d857ab7d690ef *NEWS.md
 b8c59a9260684484b66056644249569c *R/adjust_significance_level.R
-c643ec558b961379690f8c88096ed37b *R/allocation_rule.R
+8acc7587e28a031a460ded543e23f17b *R/allocation_rule.R
 97b67c8d56d188d01c6fa9cbf5088f2f *R/generate_setup_code.R
 37a425ba3c5ad981d72249200d0662aa *R/learn_allocation_rule.R
 4a071ffac5c2d49e4985aa26b24af21b *R/rl_config_set.R
@@ -15,11 +15,11 @@ f7147d0f30bb601d072635eef7ca6282 *R/timer.R
 d65036c0dc892248e636026a2920736f *R/utils.R
 9a12b77ac247b162e5fa7c66e569be31 *R/zzz.R
 fb84a3bf3645d41b871874e08b1a2101 *README.md
-9ffcfca57f59cc181364d6d76d5967f7 *build/vignette.rds
+fc005716254cf5ca5c0db77263b00599 *build/vignette.rds
 e93103d02903043dc12015fd3c8a4a00 *inst/WORDLIST
-0fca274f466b26e12f2f4862066f1298 *inst/doc/RLoptimal.R
+1d07277c28c77e30033f451b72e85485 *inst/doc/RLoptimal.R
 45d69b44577228b15ce0746b3716e5b6 *inst/doc/RLoptimal.Rmd
-cc7c9324b7813149a651935db39d57b7 *inst/doc/RLoptimal.html
+3d4776f324f3a8b9620b3225ab7f8dee *inst/doc/RLoptimal.html
 5f25fcc07b61a4a6da987fb64362a391 *inst/extdata/allocation_rule_for_test/policy_state.pkl
 dad547b66eaa1f803848d0cbb3d742ba *inst/extdata/allocation_rule_for_test/rllib_checkpoint.json
 a59e6c20953f381e3ea7763af0b0da26 *inst/python/MCPModEnv.py
